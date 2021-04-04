@@ -40,12 +40,10 @@ $btnCheck.addEventListener("click", function (e) {
     $btnCheck.disabled = true;
     $btnCheck.style.cursor = "default";
 
-    console.log("Score : ", $qScore.textContent);
-    console.log("highscore : ", $qHighScore.textContent);
+    // console.log("Score : ", $qScore.textContent);
+    // console.log("highscore : ", $qHighScore.textContent);
 
     highScore = $qScore.textContent;
-
-    console.log("highScore Now : ", highScore);
 
     if ($qScore.textContent > $qHighScore.textContent) {
       $qHighScore.textContent = highScore;
@@ -78,7 +76,6 @@ $btnCheck.addEventListener("click", function (e) {
 //reset game
 const resetGame = () => {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
-  console.log("secretNumber Reset : ", secretNumber);
   score = 20;
   $qScore.textContent = 20;
   $qNumber.textContent = "?";
