@@ -16,14 +16,16 @@ let $qHighScore = document.querySelector(".highscore");
 let $btnCheck = document.querySelector(".check");
 let $btnReset = document.querySelector(".again");
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 
 $btnReset.addEventListener("click", function () {
   resetGame();
 });
 
+console.log("secretNumber", secretNumber);
 $btnCheck.addEventListener("click", function (e) {
   const guess = Number($qGuess.value);
+
   //no input
   if (!guess) {
     $qMsg.textContent = "⛔️ No Number!";
@@ -38,19 +40,19 @@ $btnCheck.addEventListener("click", function (e) {
     $btnCheck.disabled = true;
     $btnCheck.style.cursor = "default";
 
-    console.log($qScore.textContent);
-    console.log($qHighScore.textContent);
+    console.log("Score : ", $qScore.textContent);
+    console.log("highscore : ", $qHighScore.textContent);
 
     highScore = $qScore.textContent;
 
     console.log("highScore Now : ", highScore);
 
-    //if ($qHighScore.textContent === 0) {
-    $qHighScore.textContent = highScore;
-    //}
+    if ($qScore.textContent > $qHighScore.textContent) {
+      $qHighScore.textContent = highScore;
+    }
   } // guess is too high
   else if (guess > secretNumber) {
-    if (score > 0) {
+    if (score > 1) {
       $qMsg.textContent = "📈 Too high!";
       score--;
       $qScore.textContent = score;
@@ -59,7 +61,7 @@ $btnCheck.addEventListener("click", function (e) {
     }
   } // guess is too low
   else if (guess < secretNumber) {
-    if (score > 0) {
+    if (score > 1) {
       $qMsg.textContent = "📉 Too Low!";
       score--;
       $qScore.textContent = score;
@@ -75,6 +77,9 @@ $btnCheck.addEventListener("click", function (e) {
 
 //reset game
 const resetGame = () => {
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  console.log("secretNumber Reset : ", secretNumber);
+  score = 20;
   $qScore.textContent = 20;
   $qNumber.textContent = "?";
   $qBody.style.backgroundColor = "#aa3300";
