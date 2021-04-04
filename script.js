@@ -6,11 +6,13 @@
 "use strict";
 
 let score = 20;
+let highScore = 0;
 let $qGuess = document.querySelector(".guess");
 let $qScore = document.querySelector(".score");
 let $qMsg = document.querySelector(".message");
 let $qBody = document.querySelector("body");
 let $qNumber = document.querySelector(".number");
+let $qHighScore = document.querySelector(".highscore");
 let $btnCheck = document.querySelector(".check");
 let $btnReset = document.querySelector(".again");
 
@@ -32,6 +34,20 @@ $btnCheck.addEventListener("click", function (e) {
 
     $qBody.style.backgroundColor = "#60b347";
     $qNumber.style.width = "30rem";
+
+    $btnCheck.disabled = true;
+    $btnCheck.style.cursor = "default";
+
+    console.log($qScore.textContent);
+    console.log($qHighScore.textContent);
+
+    highScore = $qScore.textContent;
+
+    console.log("highScore Now : ", highScore);
+
+    //if ($qHighScore.textContent === 0) {
+    $qHighScore.textContent = highScore;
+    //}
   } // guess is too high
   else if (guess > secretNumber) {
     if (score > 0) {
@@ -66,4 +82,7 @@ const resetGame = () => {
   $qGuess.value = "";
   $qMsg.textContent = "Start guessing...";
   $qMsg.style.animation = "blinker 1s linear infinite";
+
+  $btnCheck.disabled = false;
+  $btnCheck.style.cursor = "pointer";
 };
