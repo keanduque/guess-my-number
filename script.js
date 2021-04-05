@@ -17,57 +17,53 @@ let $btnCheck = document.querySelector(".check");
 let $btnReset = document.querySelector(".again");
 
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
+console.log("secretNumber", secretNumber);
 
+let txtGuessHighLow = "";
+
+$qGuess.value = 0;
+
+//displaying message
+const displayMessage = message => {
+  $qMsg.textContent = message;
+};
+//button for reseting game
 $btnReset.addEventListener("click", function () {
   resetGame();
 });
-
-console.log("secretNumber", secretNumber);
+//button for guessing number for the input box
 $btnCheck.addEventListener("click", function (e) {
   const guess = Number($qGuess.value);
 
   //no input
   if (!guess) {
-    $qMsg.textContent = "⛔️ No Number!";
+    displayMessage("⛔️ No Number!");
   } // player wins
   else if (guess === secretNumber) {
-    $qMsg.textContent = "🎉 Correct Number!";
+    displayMessage("🎉 Correct Number!");
     $qNumber.textContent = secretNumber;
 
     $qBody.style.backgroundColor = "#60b347";
     $qNumber.style.width = "30rem";
-
-    $btnCheck.disabled = true;
     $btnCheck.style.cursor = "default";
-
-    // console.log("Score : ", $qScore.textContent);
-    // console.log("highscore : ", $qHighScore.textContent);
+    $btnCheck.disabled = true;
 
     highScore = $qScore.textContent;
 
     if ($qScore.textContent > $qHighScore.textContent) {
       $qHighScore.textContent = highScore;
     }
-  } // guess is too high
-  else if (guess > secretNumber) {
+  } // when player guessing wrong
+  else if (guess !== secretNumber) {
     if (score > 1) {
-      $qMsg.textContent = "📈 Too high!";
+      txtGuessHighLow = guess > secretNumber ? "📈 Too high!" : "📉 Too Low!";
+      displayMessage(txtGuessHighLow);
       score--;
       $qScore.textContent = score;
     } else {
-      $qMsg.textContent = "🐶You Lost the Game!";
-    }
-  } // guess is too low
-  else if (guess < secretNumber) {
-    if (score > 1) {
-      $qMsg.textContent = "📉 Too Low!";
-      score--;
-      $qScore.textContent = score;
-    } else {
-      $qMsg.textContent = "🐶You Lost the Game!";
+      displayMessage("🐶You Lost the Game!");
     }
   }
-
   if ($qMsg.textContent != "Start guessing...") {
     $qMsg.style.animation = "initial";
   }
@@ -76,15 +72,18 @@ $btnCheck.addEventListener("click", function (e) {
 //reset game
 const resetGame = () => {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
+  console.log("Reset SecretNumber : ", secretNumber);
+
   score = 20;
   $qScore.textContent = 20;
   $qNumber.textContent = "?";
-  $qBody.style.backgroundColor = "#aa3300";
-  $qNumber.style.width = "15rem";
   $qGuess.value = "";
-  $qMsg.textContent = "Start guessing...";
-  $qMsg.style.animation = "blinker 1s linear infinite";
-
   $btnCheck.disabled = false;
+
+  $qBody.style.backgroundColor = "#ff5500";
+  $qNumber.style.width = "15rem";
+  $qMsg.style.animation = "blinker 1s linear infinite";
   $btnCheck.style.cursor = "pointer";
+
+  displayMessage("Start guessing...");
 };

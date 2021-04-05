@@ -14,7 +14,7 @@ html {
 body {
   font-family: "Press Start 2P", sans-serif;
   color: #eee;
-  background-color: #aa3300;
+  background-color: #ff5500;
   /* background-color: #60b347; */
 }
 
@@ -105,6 +105,7 @@ h1 {
   padding: 2rem 3rem;
   cursor: pointer;
   border-radius: 10px;
+  outline: none;
 }
 
 .btn:hover {
